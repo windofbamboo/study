@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="resMapper">
+
+    <!-- select 方法 -->
+    <select id="getResUsedDevice" resultType="com.ai.iot.bill.entity.res.ResUsedDevice">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,
+                ZONE_ID,GROUP_ID as billingGroupId,BILL_ID,USED_VALUE,
+                START_TIME,END_TIME
+        from TS_USEDRES_DEVICE_${month}
+        where  ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getResIncludeDevice" resultType="com.ai.iot.bill.entity.res.ResIncludeDevice">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,
+               ZONE_ID,GROUP_ID as billingGroupId,BILL_ID,TOTAL_VALUE,CURR_VALUE,
+               START_TIME,END_TIME
+        from TS_RES_DEVICE_${month}
+        where  ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getResIncludePile" resultType="com.ai.iot.bill.entity.res.ResIncludePile">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,
+               ZONE_ID,GROUP_ID,BILL_ID,VALUE,BASE_TP_INS_ID,BASE_PLAN_ID,BASE_PLAN_TYPE,
+               START_TIME,END_TIME
+        from TS_RES_PILE_${month}
+        where  ACCT_ID=#{acctId}
+    </select>
+
+
+    <select id="getResIncludeAgileShareTrun" resultType="com.ai.iot.bill.entity.res.ResIncludeShareTurn">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,
+               GROUP_ID as billingGroupId,BILL_ID,VALUE,PILE_VALUE,
+               START_TIME,END_TIME
+        from TS_RES_AGILESHARE_TURN_${month}
+        where  ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getResIncludeFixShareTurn" resultType="com.ai.iot.bill.entity.res.ResIncludeShareTurn">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,
+               GROUP_ID as billingGroupId,BILL_ID,VALUE,PILE_VALUE,
+               START_TIME,END_TIME
+        from TS_RES_FIXSHARE_TURN_${month}
+        where  ACCT_ID=#{acctId}
+    </select>
+
+    <!-- delete 方法 -->
+    <!-- 设备用量 -->
+    <delete id="deleteResDevice"  >
+        delete from TS_RES_DEVICE_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteResDevice2"  >
+        delete from TS_RES_DEVICE_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 固定共享池用量 -->
+    <delete id="deleteResPool"  >
+        delete from TS_RES_POOL_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 灵活共享用量 -->
+    <delete id="deleteResShare"  >
+        delete from TS_RES_SHARE_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 堆叠明细 -->
+    <delete id="deleteResPile"  >
+        delete from TS_RES_PILE_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteResPile2"  >
+        delete from TS_RES_PILE_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 固定共享转移明细 -->
+    <delete id="deleteResFixShareTurn"  >
+        delete from TS_RES_FIXSHARE_TURN_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteResFixShareTurn2"  >
+        delete from TS_RES_FIXSHARE_TURN_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 灵活共享转移明细 -->
+    <delete id="deleteResAgileShareTurn"  >
+        delete from TS_RES_AGILESHARE_TURN_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteResAgileShareTurn2"  >
+        delete from TS_RES_AGILESHARE_TURN_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+
+    <!-- 设备的用量核减信息 -->
+    <delete id="deleteResUsedDevice"  >
+        delete from TS_USEDRES_DEVICE_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteResUsedDevice2"  >
+        delete from TS_USEDRES_DEVICE_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 固定共享的用量核减信息 -->
+    <delete id="deleteResUsedPool"  >
+        delete from TS_USEDRES_POOL_${month} where ACCT_ID=#{acctId}
+    </delete>
+    <!-- 灵活共享的用量核减信息 -->
+    <delete id="deleteResUsedShare" >
+        delete from TS_USEDRES_SHARE_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+<!-- insert 方法 -->
+    <!-- 设备用量 -->
+    <insert id="insertResDevice" >
+        insert into TS_RES_DEVICE_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,TOTAL_VALUE,CURR_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},
+             #{zoneId},#{billingGroupId},#{billId},#{totalValue},#{currValue},
+             #{startTime},#{endTime} )
+    </insert>
+
+    <!-- 固定共享池用量 -->
+    <insert id="insertResPool" >
+        insert into TS_RES_POOL_${month}
+        (ACCT_ID,POOL_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,TOTAL_VALUE,CURR_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{poolId},#{cycleId},#{planId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{totalValue},#{currValue},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 灵活共享用量 -->
+    <insert id="insertResShare" >
+        insert into TS_RES_SHARE_${month}
+        (ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{cycleId},#{planId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{value},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 堆叠明细 -->
+    <insert id="insertResPile" >
+        insert into TS_RES_PILE_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,VALUE,
+        BASE_TP_INS_ID,BASE_PLAN_ID,BASE_PLAN_TYPE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},#{zoneId},#{billingGroupId},#{billId},#{value},
+             #{baseTpInsId},#{basePlanId},#{basePlanType},#{startTime},#{endTime})
+    </insert>
+
+    <!-- 固定共享转移明细 -->
+    <insert id="insertResFixShareTurn" >
+        insert into TS_RES_FIXSHARE_TURN_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,
+        GROUP_ID,BILL_ID,VALUE,PILE_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},#{zoneId},
+             #{billingGroupId},#{billId},#{value},#{pileValue},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 灵活共享转移明细 -->
+    <insert id="insertResAgileShareTurn" >
+        insert into TS_RES_AGILESHARE_TURN_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,
+        GROUP_ID,BILL_ID,VALUE,PILE_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},#{zoneId},
+             #{billingGroupId},#{billId},#{value},#{pileValue},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 设备的用量核减信息 -->
+    <insert id="insertResUsedDevice" >
+        insert into TS_USEDRES_DEVICE_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,ZONE_ID,GROUP_ID,
+        BILL_ID,USED_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{zoneId},#{billingGroupId},
+             #{billId},#{usedValue},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 固定共享的用量核减信息 -->
+    <insert id="insertResUsedPool" >
+        insert into TS_USEDRES_POOL_${month}
+        (ACCT_ID,POOL_ID,CYCLE_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,USED_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{poolId},#{cycleId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{currValue},
+             #{startTime},#{endTime})
+    </insert>
+
+    <!-- 灵活共享的用量核减信息 -->
+    <insert id="insertResUsedShare" >
+        insert into TS_USEDRES_SHARE_${month}
+        (ACCT_ID,CYCLE_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,USED_VALUE,START_TIME,END_TIME)
+        values
+            (#{acctId},#{cycleId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{currValue},
+             #{startTime},#{endTime})
+    </insert>
+
+
+</mapper>

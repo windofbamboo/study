@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="paramMapper">
+    <select id="getUpdateFlag" parameterType="String" resultType="java.util.Date">
+        SELECT UPDATE_FLAG as "updateFlag"
+        FROM td_update_group_flag
+        WHERE TAB_GROUP_NAME= #{pogName,javaType=String,jdbcType=VARCHAR};
+    </select>
+
+<!--     <select id="getCdrFormatById" parameterType="String" resultType="com.ai.iot.bill.param.pos.PoCdrFormatBase">
+        SELECT PROC_NAME as "procName",
+            INOUT_FLAG as "inOutFlag",
+            SOURCE_TYPE as "sourceType",
+            FORMAT_ID as "formatId",
+            FORMAT_REMARK as "formatRemark"
+        FROM td_b_cdr_format
+        WHERE PROC_NAME = #{formatId,javaType=String,jdbcType=VARCHAR};
+    </select>
+
+     <select id="getCdrFormats" resultType="com.ai.iot.bill.param.pos.PoCdrFormatBase">
+        SELECT PROC_NAME as "procName",
+            INOUT_FLAG as "inOutFlag",
+            SOURCE_TYPE as "sourceType",
+            FORMAT_ID as "formatId",
+            FORMAT_REMARK as "formatRemark"
+        FROM td_b_cdr_format;
+    </select>
+ -->
+</mapper>

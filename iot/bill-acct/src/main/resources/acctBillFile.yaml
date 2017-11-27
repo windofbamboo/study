@@ -1,0 +1,6 @@
+storm.cluster.mode: distributed
+
+#spout并发度只能为一个，否则会造成多线程同时操作一个topic
+topology.spout.parallel: 1
+topology.bolt.parallel: 1
+topology.workers: 1

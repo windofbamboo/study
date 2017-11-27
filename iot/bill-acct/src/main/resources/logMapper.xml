@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="logMapper">
+
+    <select id="getDeviceLog" resultType="com.ai.iot.bill.entity.log.DeviceLog">
+        select ACCT_ID,DEVICE_ID,DEAL_STAGE,DEAL_TAG,REMARK,
+                cast(date_format(START_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as START_TIME,
+                cast(date_format(END_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as END_TIME,
+                cast(date_format(UPDATE_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as UPDATE_TIME
+        from TL_B_DEVICE
+        where ACCT_ID=#{acctId} and (DEAL_STAGE!=21 or deal_tag!=3) and DEAL_ID=#{dealId}
+    </select>
+
+    <select id="getAcctLog" resultType="com.ai.iot.bill.entity.log.AcctLog">
+        select ACCT_ID,DEAL_STAGE,DEAL_TAG,REMARK,
+                cast(date_format(START_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as START_TIME,
+                cast(date_format(END_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as END_TIME,
+                cast(date_format(UPDATE_TIME,'%Y%m%d%H%i%s') as UNSIGNED INTEGER) as UPDATE_TIME
+        from TL_B_ACCT
+        where ACCT_ID=#{acctId} and DEAL_ID=#{dealId}
+    </select>
+
+    <delete id="deleteDeviceLog" >
+        delete from TL_B_DEVICE where ACCT_ID=#{acctId} and DEAL_ID=#{dealId}
+    </delete>
+
+    <delete id="deleteAcctLog" >
+        delete from TL_B_ACCT where ACCT_ID=#{acctId} and DEAL_ID=#{dealId}
+    </delete>
+
+    <insert id="insertDeviceLog" >
+        insert into TL_B_DEVICE
+        (DEAL_ID,ACCT_ID,DEVICE_ID,DEAL_STAGE,DEAL_TAG,START_TIME,UPDATE_TIME)
+        values
+        (#{dealId},#{acctId},#{deviceId},#{dealStage},#{dealTag},sysdate(),sysdate())
+    </insert>
+
+    <insert id="insertAcctLog" >
+        insert into TL_B_ACCT
+        (DEAL_ID,ACCT_ID,DEAL_STAGE,DEAL_TAG,ACCT_START_TIME,UPDATE_TIME)
+        values
+        (#{dealId},#{acctId},#{dealStage},#{dealTag},sysdate(),sysdate())
+    </insert>
+
+    <insert id="insertDealLog" >
+        insert into TL_B_DEALLOG
+        (DEAL_ID,TOTAL_NUM,DEAL_NUM,SUCESS_NUM,FAIL_NUM,IGNORE_NUM,MQ_CREATE_TIME,UPDATE_TIME)
+        values
+        (#{dealId},#{totalNum},#{dealNum},#{sucessNum},#{failNum},#{ignoreNum},sysdate(),sysdate())
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="computeBillMapper">
+
+    <!-- select 方法 -->
+    <select id="getDeviceBillOrder" resultType="com.ai.iot.bill.entity.computebill.DeviceBillOrder">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_TYPE,PLAN_ID,PLAN_VERSION_ID,ITEM_ID,ACCT_FEE,FEE,ORDER_NUMS as orderNum,1 as levelPriority
+         from TS_DEVICE_ORDER_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillActive" resultType="com.ai.iot.bill.entity.computebill.DeviceBillActivation">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,
+                ACTIVATION_TIME as activationTime,
+                ITEM_ID,FEE,ACTIVATION_TYPE
+         from TS_DEVICE_ACTIVATION_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillUsage" resultType="com.ai.iot.bill.entity.computebill.DeviceBillUsage">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,ITEM_ID,FEE,BIZ_TYPE
+        from TS_DEVICE_USAGE_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctOrder" resultType="com.ai.iot.bill.entity.computebill.AcctBillOrder">
+        select ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,ITEM_ID,FEE
+        from TS_ACCT_ORDER_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctUsage" resultType="com.ai.iot.bill.entity.computebill.AcctBillUsage">
+        select ACCT_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,PLAN_TYPE,ZONE_ID,GROUP_ID,BILL_ID,ITEM_ID,FEE
+        from TS_ACCT_USAGE_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctTrack" resultType="com.ai.iot.bill.entity.computebill.BillTrackAcct">
+        select ACCT_ID,CYCLE_ID,STAGE,SOURCE_ID,ITEM_ID,FEE,ORDER_NO
+        from TS_ACCT_BILL_TRACK_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <!-- delete 方法 -->
+    <delete id="deleteDeviceOrder" >
+        delete from TS_DEVICE_ORDER_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceOrder2" >
+        delete from TS_DEVICE_ORDER_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteDeviceActive" >
+        delete from TS_DEVICE_ACTIVATION_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceActive2" >
+        delete from TS_DEVICE_ACTIVATION_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteDeviceUsage" >
+        delete from TS_DEVICE_USAGE_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceUsage2" >
+        delete from TS_DEVICE_USAGE_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteAcctOrder" >
+        delete from TS_ACCT_ORDER_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteAcctUsage" >
+        delete from TS_ACCT_USAGE_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteAcctTrack" >
+        delete from TS_ACCT_BILL_TRACK_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteAcctBill" >
+        delete from TS_ACCT_BILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <delete id="deleteBssBill" >
+        delete from TS_BSS_BILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- insert 方法 -->
+    <insert id="insertDeviceOrder" >
+        insert into TS_DEVICE_ORDER_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,PLAN_TYPE,ITEM_ID,ACCT_FEE,FEE,ORDER_NUMS)
+        values
+        (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},#{planType},#{itemId},#{acctFee},#{fee},#{orderNum})
+    </insert>
+
+    <insert id="insertDeviceActive" >
+        insert into TS_DEVICE_ACTIVATION_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,ACTIVATION_TIME,ITEM_ID,FEE,ACTIVATION_TYPE)
+        values
+        (#{acctId},#{deviceId},#{cycleId},#{planId},#{activationTime},#{itemId},
+        #{fee},#{activationType})
+    </insert>
+
+    <insert id="insertDeviceUsage" >
+        insert into TS_DEVICE_USAGE_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,TP_INS_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,ITEM_ID,FEE,BIZ_TYPE)
+        values
+        (#{acctId},#{deviceId},#{cycleId},#{tpInsId},#{planId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{itemId},#{fee},#{bizType})
+    </insert>
+
+    <insert id="insertAcctOrder" >
+        insert into TS_ACCT_ORDER_${month}
+        (ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,ITEM_ID,FEE)
+        VALUES
+        (#{acctId},#{cycleId},#{planId},#{planVersionId},#{itemId},#{acctFee})
+    </insert>
+
+    <insert id="insertAcctUsage" >
+        insert into TS_ACCT_USAGE_${month}
+        (ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,ZONE_ID,GROUP_ID,BILL_ID,ITEM_ID,FEE,BIZ_TYPE)
+        VALUES
+        (#{acctId},#{cycleId},#{planId},#{planVersionId},#{zoneId},#{groupId},#{billId},#{itemId},#{fee},#{bizType})
+    </insert>
+
+    <insert id="insertAcctTrack" >
+        insert into TS_ACCT_BILL_TRACK_${month}
+        (ACCT_ID,CYCLE_ID,STAGE,SOURCE_ID,ITEM_ID,FEE,ORDER_NO)
+        VALUES
+        (#{acctId},#{cycleId},#{stage},#{sourceId},#{itemId},#{fee},#{orderNo})
+    </insert>
+
+    <insert id="insertAcctBill" >
+        insert into TS_ACCT_BILL_${month}
+        (ACCT_ID,CYCLE_ID,ITEM_ID,FEE)
+        VALUES
+        (#{acctId},#{cycleId},#{itemId},#{fee})
+    </insert>
+
+    <insert id="insertBssBill" >
+        insert into TS_BSS_BILL_${month}
+        (CITY_CODE,PROV_CODE,AREA_CODE,CYCLE_ID,OPER_ACCT_ID,ACCT_ID,BILL_TYPE,HEADQUARTER_ITEM_ID,PROV_ITEM_ID,
+        FEE,ORIGINAL_FEE,DISCOUNT_FEE,BILL_START_DATE,BILL_END_DATE)
+        VALUES
+        (#{cityCode},#{provCode},#{areaCode},#{cycleId},#{operAcctId},#{acctId},#{billType},#{headquarterItemId},#{provItemId},
+        #{fee},#{originalFee},#{discountFee},#{billStartDate},#{billEndDate})
+    </insert>
+
+    <!-- update 方法 -->
+    <update id="updateDeviceOrder" >
+        update TS_DEVICE_ORDER_${month} set FEE=#{fee},ACCT_FEE=#{acctFee}
+        where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId} and TP_INS_ID=#{tpInsId} and PLAN_ID=#{planId} and PLAN_VERSION_ID=#{planVersionId}
+    </update>
+
+</mapper>

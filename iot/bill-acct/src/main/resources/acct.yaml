@@ -1,0 +1,19 @@
+storm.cluster.mode: distributed
+
+topology.message.timeout.secs: 60
+
+topology.workers: 4
+topology.acker.executors: 4
+#spout并发度只能为一个，否则会造成多线程同时操作一个topic
+topology.spout.parallelism:
+  AcctSpout: 1
+  BillSpout: 1
+  DeviceSpout: 1
+  ControlSpout: 1
+
+topology.bolt.parallelism:
+  AcctBolt: 4
+  BillBolt: 4
+  DeviceBolt: 4
+  ControlBolt: 1
+

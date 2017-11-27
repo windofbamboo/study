@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://www.ehcache.org/v3'
+    xmlns:mnm='http://www.ehcache.org/v3/management'
+    xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd
+    					http://www.ehcache.org/v3/management ./ehcache-management-ext.xsd"
+    >
+<!-- 监控配置 3.3版本未知-->
+<!--  <service>
+     <mnm:management cache-manager-alias="my-cache-manager-name" statistics-executor-alias="my-statisticsExecutorAlias" collector-executor-alias="my-collectorExecutorAlias">
+      <mnm:tags>
+        <mnm:tag>webapp-name</mnm:tag>
+        <mnm:tag>jboss-1</mnm:tag>
+        <mnm:tag>server-node-1</mnm:tag>
+      </mnm:tags>
+      <mnm:statistics-configurations>
+        <mnm:statistics-configuration provider="org.ehcache.management.providers.statistics.EhcacheStatisticsProvider">
+          <mnm:average-window unit="hours">2</mnm:average-window>
+          <mnm:history-interval unit="minutes">1</mnm:history-interval>
+          <mnm:history-size>500</mnm:history-size>
+          <mnm:time-to-disable unit="minutes">1</mnm:time-to-disable>
+        </mnm:statistics-configuration>
+      </mnm:statistics-configurations>
+    </mnm:management> 
+  </service>-->
+  <!-- 	
+  ParamCachePoGroupTemplate内部通过该模版cache产生Po组的每个cache,
+  注:这里是真正的模版cache
+	1)heap大小0=不受限; 但受制于Integer.MAX_SIZE (2147483647),集群除外
+	2)不持久化(即不配置持久化的元素)
+	3)数据永远有效
+	4)非集群 -->
+  <cache-template name="ParamCachePoGroupTemplate"> 
+    <key-type>java.lang.String</key-type>
+    <value-type>com.ai.iot.bill.common.paramcachemanager.core.pobase.PoBaseLinkedList</value-type>
+<!-- 只允许存放1w个key    <heap unit="entries">10000</heap> -->
+<!-- 只允许存放最多2G内存,超过了需要修改该配置 -->
+	<resources>
+    	<heap unit="MB">2000</heap> 
+    </resources>
+    <!-- 不配置即none  	<expiry><none/></expiry> -->
+  </cache-template>
+<!-- Sample 
+  <cache alias="foo"> 
+    <key-type>java.lang.String</key-type> 
+    <value-type>java.lang.String</value-type> 
+    <expiry>
+      <class>com.pany.ehcache.MyExpiry</class> 
+      <ttl unit="seconds">20</ttl>
+    </expiry>
+    <resources>
+      <heap unit="entries">2000</heap> 
+      <offheap unit="MB">500</offheap> 
+      <disk unit="MB" persistent="true">100</disk>
+    </resources>
+  </cache>
+-->
+<!-- 无需持久\需要监控\无需序列化和反序列化\无需copy方式\无需监听事件 
+  <cache alias="Sample" uses-template="ParamCache">
+		<expiry><none/></expiry>
+  </cache>
+-->
+</config>
+

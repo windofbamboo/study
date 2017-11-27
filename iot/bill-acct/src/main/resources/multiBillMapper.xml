@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="multiBillMapper">
+
+    <!-- select 方法 -->
+    <select id="getDeviceUsage" resultType="com.ai.iot.bill.entity.multibill.DeviceUsage">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,DATA_AMOUNT as dataUsage,
+                SMS_AMOUNT as smsUsage,VOICE_AMOUNT as voiceUsage,EVENT_DATA_AMOUNT as eventDataUsage,EVENTS as eventNums
+        from TS_B_DEVICE_USAGE_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillData" resultType="com.ai.iot.bill.entity.multibill.DeviceBillData">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,ZONE_ID,ITEM_ROAM,IS_EXPIRE_TERM_BY_USAGE,
+                GPRS_VALUE,GPRS_FEE,INCLUDE_MODE,INCLUDE_VALUE,ROUND_ADJUST,BULK_ADJUST
+        from TS_B_GPRSBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillSms" resultType="com.ai.iot.bill.entity.multibill.DeviceBillSms">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,ZONE_ID,GROUP_ID,ITEM_ROAM,SMS_VALUE,SMS_CHARGE,INCLUDE_MODE,INCLUDE_VALUE,CALL_TYPE
+        from TS_B_SMBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillVoice" resultType="com.ai.iot.bill.entity.multibill.DeviceBillVoice">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,ZONE_ID,GROUP_ID,ITEM_ROAM,VOICE_VALUE,VOICE_CHARGE,INCLUDE_MODE,INCLUDE_VALUE,CALL_TYPE
+        from TS_B_VOICEBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillActive" resultType="com.ai.iot.bill.entity.multibill.DeviceBillActive">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,ACTIVE_CHARGE,ACTIVE_TYPE,ACTIVE_TIME
+        from TS_B_ACTIVEBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBillPrepay" resultType="com.ai.iot.bill.entity.multibill.DeviceBillPrepay">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,PLAN_TYPE,
+               USAGE_PRORATION_INDEX,ORDER_CHARGE,TERM_START_DATE,TERM_END_DATE,
+               INCLUDE_DATA_VALUE,INCLUDE_SMS_VALUE,INCLUDE_SMS_MO_VALUE,INCLUDE_SMS_MT_VALUE,INCLUDE_VOICE_VALUE,INCLUDE_VOICE_MO_VALUE,INCLUDE_VOICE_MT_VALUE,
+               TERM_DATA_USAGE,CURR_PEROID_DATA,TERM_SMS_USAGE,CURR_PEROID_SMS,CURR_PEROID_SMS_MO,CURR_PEROID_SMS_MT,
+               TERM_VOICE_USAGE,CURR_PEROID_VOICE,CURR_PEROID_VOICE_MO,CURR_PEROID_VOICE_MT
+        from TS_B_PREPAYBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceBill" resultType="com.ai.iot.bill.entity.multibill.DeviceBill">
+        select ACCT_ID,DEVICE_ID,CYCLE_ID,SUB_ACCT_ID,PLAN_ID,
+                PREPAY_TERM_NUMS,STANDRAD_PLAN_ID,USAGE_PRORATION_INDEX,STATUS,ORDER_CHARGE,
+                SHARE_CHARGE,ACTIVE_EVENTS,EVENT_CHARGE,DATA_VALUE,
+                SMS_VALUE,SMS_MO_VALUE,SMS_MT_VALUE,PLAT_SMS_VALUE,
+                VOICE_VALUE,VOICE_MO_VALUE,VOICE_MT_VALUE
+        from TS_B_DEVICEBILL_${month} where ACCT_ID=#{acctId}
+    </select>
+
+
+    <!-- 删除设备 -->
+    <delete id="deleteDeviceUsage"  >
+        delete from TS_B_DEVICE_USAGE_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceUsage2"  >
+        delete from TS_B_DEVICE_USAGE_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 流量账单 -->
+    <delete id="deleteDeviceBillData"  >
+        delete from TS_B_GPRSBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBillData2"  >
+        delete from TS_B_GPRSBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 短信账单 -->
+    <delete id="deleteDeviceBillSms"  >
+        delete from TS_B_SMBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBillSms2"  >
+        delete from TS_B_SMBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 语音账单 -->
+    <delete id="deleteDeviceBillVoice"  >
+        delete from TS_B_VOICEBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBillVoice2"  >
+        delete from TS_B_VOICEBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 激活账单 -->
+    <delete id="deleteDeviceBillActive"  >
+        delete from TS_B_ACTIVEBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBillActive2"  >
+        delete from TS_B_ACTIVEBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 账单记录 -->
+    <delete id="deleteDeviceBill"  >
+        delete from TS_B_DEVICEBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBill2"  >
+        delete from TS_B_DEVICEBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除设备 预付订购账单 -->
+    <delete id="deleteDeviceBillPrepay"  >
+        delete from TS_B_PREPAYBILL_${month} where ACCT_ID=#{acctId} and DEVICE_ID=#{deviceId}
+    </delete>
+    <delete id="deleteDeviceBillPrepay2"  >
+        delete from TS_B_PREPAYBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 计费组账单 -->
+    <delete id="deleteAcctBillGroup"  >
+        delete from TS_B_GROUPBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 资费计划区域账单 -->
+    <delete id="deleteAcctPlanZoneBill"  >
+        delete from TS_B_PLANZONEBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 资费计划账单 -->
+    <delete id="deleteAcctPlanBill"  >
+        delete from TS_B_PLANBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 追加账单 -->
+    <delete id="deleteAcctBillAdd"  >
+        delete from TS_B_ADDBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 账户折扣账单 -->
+    <delete id="deleteAcctBillDiscount"  >
+        delete from TS_B_DISCOUNTBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 资费组折扣账单 -->
+    <delete id="deleteAcctRateGroup"  >
+        delete from TS_B_RATEGROUP_DISCOUNTBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 其它账单 -->
+    <delete id="deleteAcctBillOther"  >
+        delete from TS_B_OTHERBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 调账账单 -->
+    <delete id="deleteAdjustBill"  >
+        delete from TS_B_ADJUSTBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+    <!-- 删除账户 明细账单 -->
+    <delete id="deleteAcctBillSum"  >
+        delete from TS_B_SUMBILL_${month} where ACCT_ID=#{acctId}
+    </delete>
+
+
+    <!-- insert方法 -->
+    <!-- insert设备 用量情况 -->
+    <insert id="insertDeviceUsage"  >
+        insert into TS_B_DEVICE_USAGE_${month}
+        (ACCT_ID,DEVICE_ID,CYCLE_ID,DATA_AMOUNT,SMS_AMOUNT,VOICE_AMOUNT,EVENT_DATA_AMOUNT,EVENTS)
+        values
+        (#{acctId},#{deviceId},#{cycleId},#{dataUsage},#{smsUsage},#{voiceUsage},#{eventDataUsage},#{eventNums})
+    </insert>
+    <!-- insert设备 流量账单 -->
+    <insert id="insertDeviceBillData"  >
+        insert into TS_B_GPRSBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,
+        PLAN_TYPE,ZONE_ID,ITEM_ROAM,INCLUDE_MODE,IS_EXPIRE_TERM_BY_USAGE,
+        GPRS_VALUE,GPRS_FEE,INCLUDE_VALUE,ROUND_ADJUST,BULK_ADJUST)
+        values
+            (#{seqId},#{acctId},#{deviceId},#{cycleId},#{planId},
+             #{planType},#{zoneId},#{isRemote},#{includeMode},#{isExpireTermByUsage},
+             #{gprsValue},#{gprsFee},#{includeValue},#{roundAdjust},#{bulkAdjust})
+    </insert>
+
+    <!-- insert设备 短信账单 -->
+    <insert id="insertDeviceBillSms"  >
+        insert into TS_B_SMBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,
+        ZONE_ID,GROUP_ID,ITEM_ROAM,SMS_VALUE,SMS_CHARGE,
+        INCLUDE_MODE,INCLUDE_VALUE,CALL_TYPE)
+        values
+            (#{seqId},#{acctId},#{deviceId},#{cycleId},#{planId},#{planType},
+            #{zoneId},#{groupId},#{isRemote},#{smsValue},#{smsCharge},
+            #{includeMode},#{includeValue},#{callType})
+    </insert>
+
+    <!-- insert设备 语音账单 -->
+    <insert id="insertDeviceBillVoice"  >
+        insert into TS_B_VOICEBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,
+        ZONE_ID,GROUP_ID,ITEM_ROAM,VOICE_VALUE,VOICE_CHARGE,
+        INCLUDE_MODE,INCLUDE_VALUE,CALL_TYPE)
+        values
+            (#{seqId},#{acctId},#{deviceId},#{cycleId},#{planId},#{planType},
+            #{zoneId},#{groupId},#{isRemote},#{voiceValue},#{voiceCharge},
+            #{includeMode},#{includeValue},#{callType})
+    </insert>
+
+    <!-- insert设备 激活账单 -->
+    <insert id="insertDeviceBillActive"  >
+        insert into TS_B_ACTIVEBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,ACTIVE_CHARGE,ACTIVE_TYPE,ACTIVE_TIME)
+        values
+        (#{seqId},#{acctId},#{deviceId},#{cycleId},#{activeCharge},#{activeType},#{activeTime} )
+    </insert>
+
+    <!-- insert设备 账单记录 -->
+    <insert id="insertDeviceBill"  >
+        insert into TS_B_DEVICEBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,SUB_ACCT_ID,PLAN_ID,
+        PREPAY_TERM_NUMS,STANDRAD_PLAN_ID,USAGE_PRORATION_INDEX,STATUS,ORDER_CHARGE,
+        SHARE_CHARGE,ACTIVE_EVENTS,EVENT_CHARGE,DATA_VALUE,
+        SMS_VALUE,SMS_MO_VALUE,SMS_MT_VALUE,PLAT_SMS_VALUE,
+        VOICE_VALUE,VOICE_MO_VALUE,VOICE_MT_VALUE)
+        values
+            (#{seqId},#{acctId},#{deviceId},#{cycleId},#{subAcctId},#{planId},
+            #{prepayTermNums},#{standradPlanId},#{usageProrationIndex},#{status},#{orderCharge},
+            #{shareCharge},#{activeEvents},#{eventCharge},#{dataValue},
+            #{smsValue},#{smsMoValue},#{smsMtValue},#{platformSmsValue},
+            #{voiceValue},#{voiceMoValue},#{voiceMtValue})
+    </insert>
+
+    <!-- insert设备 预付订购账单 -->
+    <insert id="insertDeviceBillPrepay"  >
+        insert into TS_B_PREPAYBILL_${month}
+        (SEQ_ID,ACCT_ID,DEVICE_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,PLAN_TYPE,
+        USAGE_PRORATION_INDEX,ORDER_CHARGE,TERM_START_DATE,TERM_END_DATE,INCLUDE_DATA_VALUE,
+        INCLUDE_SMS_VALUE,INCLUDE_SMS_MO_VALUE,INCLUDE_SMS_MT_VALUE,INCLUDE_VOICE_VALUE,INCLUDE_VOICE_MO_VALUE,INCLUDE_VOICE_MT_VALUE,
+        TERM_DATA_USAGE,CURR_PEROID_DATA,TERM_SMS_USAGE,CURR_PEROID_SMS,CURR_PEROID_SMS_MO,CURR_PEROID_SMS_MT,
+        TERM_VOICE_USAGE,CURR_PEROID_VOICE,CURR_PEROID_VOICE_MO,CURR_PEROID_VOICE_MT)
+        values
+            (#{seqId},#{acctId},#{deviceId},#{cycleId},#{planId},#{planVersionId},#{planType},
+            #{usageProrationIndex},#{orderCharge},#{termStartDate},#{termEndDate},#{includeDataValue},
+            #{includeSmsValue},#{includeSmsMoValue},#{includeSmsMtValue},#{includeVoiceValue},#{includeVoiceMoValue},#{includeVoiceMtValue},
+            #{termDataUsage},#{currPeroidData},#{termSmsUsage},#{currPeroidSms},#{currPeroidSmsMo},#{currPeroidSmsMt},
+            #{termVoiceUsage},#{currPeroidVoice},#{currPeroidVoiceMo},#{currPeroidVoiceMt})
+    </insert>
+
+    <!-- insert账户 资费组折扣账单 -->
+    <insert id="insertAcctRateGroup"  >
+        insert into TS_B_RATEGROUP_DISCOUNTBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,RATE_GROUP,PLAN_ID,PLAN_VERSION_ID,ITEM_ID,DISCOUNT_PERCENT,ORIGNAL_CHARGE,DISCOUNT)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{rateGroup},#{planId},#{planVersionId},
+        #{itemId},#{disountPercent},#{orignalCharge},#{disountCharge})
+    </insert>
+
+    <!-- insert账户 资费计划区域账单 -->
+    <insert id="insertAcctPlanZoneBill"  >
+        insert into TS_B_PLANZONEBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_TYPE,ZONE_ID,ITEM_ROAM,IS_EXPIRE_TERM_BY_USAGE,
+        GPRS_VALUE,GPRS_FEE,INCLUDE_MODE,INCLUDE_VALUE,ROUND_ADJUST,BULK_ADJUST)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{planId},#{planType},#{zoneId},#{isRemote},#{isExpireTermByUsage},
+        #{gprsValue},#{gprsFee},#{includeMode},#{includeValue},#{roundAdjust},#{bulkAdjust})
+    </insert>
+
+    <!-- insert账户 资费计划账单 -->
+    <insert id="insertAcctPlanBill"  >
+        insert into TS_B_PLANBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,PLAN_TYPE,PAYMENT_TYPE,
+        ORDERS,PREPAY_ACTIVATIONS,ACTIVE_ORDERS,ACTIVATION_GRACE_PERIOD_ORDERS,MININUM_ACTIVATION_TERM_ORDERS,
+        ORDER_CHARGE,FIXED_POOL_CHARGE,DATA_VALUE,DATA_CHARGE,REMOTE_DATA,REMOTE_DATA_CHARGE,LOCAL_DATA,LOCAL_DATA_CHARGE,
+        SMS_VALUE,SMS_MO_VALUE,SMS_MT_VALUE,SMS_CHARGE,VOICE_VALUE,VOICE_MO_VALUE,VOICE_MT_VALUE,VOICE_CHARGE,TOTAL_CHARGE,
+        INCLUDE_DATA_PRIMARY_ZONE,INCLUDE_SMS,INCLUDE_SMS_MO,INCLUDE_SMS_MT,INCLUDE_VOICE,INCLUDE_VOICE_MO,INCLUDE_VOICE_MT,
+        INCLUDE_DATA_MODE,INCLUDE_SMS_MODE,INCLUDE_SMS_MO_MODE,INCLUDE_SMS_MT_MODE,
+        INCLUDE_VOICE_MODE,INCLUDE_VOICE_MO_MODE,INCLUDE_VOICE_MT_MODE,
+        ACTIVE_TIER,RATE_GROUP,DISCOUNT_RATE,DISCOUNT_AMOUNT)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{planId},#{planVersionId},#{planType},#{paymentType},
+        #{orders},#{prepayActivations},#{activeOrders},#{activationGracePeriodOrders},#{mininumActivationTermOrders},
+        #{orderCharge},#{fixedPoolCharge},#{dataValue},#{dataCharge},#{remoteData},#{remoteDataCharge},#{localData},#{localDataCharge},
+        #{smsValue},#{smsMoValue},#{smsMtValue},#{smsCharge},#{voiceValue},#{voiceMoValue},#{voiceMtValue},#{voiceCharge},#{totalCharge},
+        #{includeDataPrimaryZone},#{includeSms},#{includeSmsMo},#{includeSmsMt},#{includeVoice},#{includeVoiceMo},#{includeVoiceMt},
+        #{includeDataMode},#{includeSmsMode},#{includeSmsMoMode},#{includeSmsMtMode},#{includeVoiceMode},#{includeVoiceMoMode},
+        #{includeVoiceMtMode},#{activeTier},#{rateGroup},#{discountRate},#{discountAmount})
+    </insert>
+
+    <!-- insert账户 追加账单 -->
+    <insert id="insertAcctBillAdd"  >
+        insert into TS_B_ADDBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,PLAN_ID,PLAN_VERSION_ID,
+         ZONE_ID,ADD_VALUES,ADD_FEE,BASE_PLAN_ID,ORDER_TIME)
+        values
+            (#{seqId},#{acctId},#{cycleId},#{planId},#{planVersionId},
+            #{zoneId},#{addValues},#{addFee},#{basePlanId},#{orderTime})
+    </insert>
+
+    <!-- insert账户 账户折扣账单 -->
+    <insert id="insertAcctBillDiscount"  >
+        insert into TS_B_DISCOUNTBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,ITEM_ID,DISCOUNT_PERCENT,ORIGNAL_CHARGE,DISCOUNT)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{itemId},#{disountPercent},#{orignalCharge},#{disountCharge})
+    </insert>
+
+    <!-- insert账户 其它账单 -->
+    <insert id="insertAcctBillOther"  >
+        insert into TS_B_OTHERBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,FEE_TYPE,DISCOUNT_TAG,DESCRIBES,NUMBERS,FEE,ORDER_ID)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{chargeType},#{discountTag},#{description},#{numbers},#{fee},#{orderInsId})
+    </insert>
+
+    <!-- insert账户 调账账单 -->
+    <insert id="insertAdjustBill"  >
+        insert into TS_B_ADJUSTBILL_${month}
+        (SEQ_ID,ACCT_ID,CYCLE_ID,TYPE,ADJUST_TYPE,ADJUST_FEE,ADJUST_TIME,DESCRIBES)
+        values
+        (#{seqId},#{acctId},#{cycleId},#{type},#{adjustType},#{adjustFee},#{adjustTime},#{description})
+    </insert>
+
+    <!-- insert账户 汇总账单 -->
+    <insert id="insertAcctBillSum"  >
+        insert into TS_B_SUMBILL_${month}
+        (SEQ_ID,ACCT_ID,OPER_ACCTID,BILL_DATE,LAST_PAY_DATE,CYCLE_ID,
+        RATE_TAG,PUBLISH_TAG,RATE_DEVICES,NOMAL_DEVICES,GPRS_VALUE,
+        SMS_VALUE,VOICE_VALUE,SERVICE_CHARGE,DISCOUNT_RATE,ORDER_CHARGE,
+        GPRS_CHARGE,SMS_CHARGE,VOICE_CHARGE,AVTIVATION_CHARGE,OTHER_CHARGE,
+        DISCOUNT_CHARGE,TOTAL_CHARGE,STANDARD_CHARGE,STANDARD_ROAM_CHARGE,
+        EVENTS,EVENT_GPRS_VALUE,EVENT_CHARGE,PLAT_SMS_VALUE,PLAT_SMS_CHARGE,PLAT_SMS_LEVEL)
+        values
+        (#{seqId},#{acctId},#{operAcctId},#{billDate},#{lastPayDate},#{cycleId},
+        #{rateTag},#{publishTag},#{rateDevices},#{nomalDevices},#{gprsValue},
+        #{smsValue},#{voiceValue},#{serviceCharge},#{discountRate},#{orderCharge},
+        #{gprsCharge},#{smsCharge},#{voiceCharge},#{avtivationCharge},#{otherCharge},
+        #{discountCharge},#{totalCharge},#{standardCharge},#{standardRoamCharge},
+        #{events},#{eventGprsValue},#{eventCharge},#{platSmsValue},#{platSmsCharge},#{platSmsLevel})
+    </insert>
+
+    <!-- 更新设备 账单记录 -->
+    <update id="updateDeviceBill"  >
+        update  TS_B_DEVICEBILL_${month} set order_charge=#{orderCharge} ,share_charge=#{shareCharge}
+        where ACCT_ID=#{acctId} and device_id=#{deviceId} and plan_id=#{planId}
+    </update>
+
+</mapper>

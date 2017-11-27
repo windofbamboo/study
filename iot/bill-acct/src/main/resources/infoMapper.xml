@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="infoMapper">
+
+    <select id="getAcctInfo"  resultType="com.ai.iot.bill.entity.info.AcctInfoBean">
+        select ACCT_ID as acctId,
+                IFNULL(OPER_ACCTID,"0") as operAcctId,
+                IFNULL(IS_PAY_BACK,'0') as isPayBack,
+                IFNULL(STATUS,'0') as status,
+                IFNULL(ACCT_SEGMENT,'0') as acctSegment,
+                PROVINCE_CODE,
+                CITY_CODE,
+                IFNULL(REMOVE_TAG,'0') as removeTag,
+                REMOVE_TIME as removeTime
+         from TF_F_ACCT
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAppendFeepolicyBean"  resultType="com.ai.iot.bill.entity.info.AppendFeepolicyBean">
+        select ACCT_ID,APPEND_VERSION_ID as appendPlanVersionId ,PLAN_VERSION_ID,
+               START_DATE as START_TIME,
+               END_DATE as END_TIME
+        from TF_F_APPEND_FEEPOLICY
+        where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctCommitments"  resultType="com.ai.iot.bill.entity.info.AcctCommitmentsBean">
+        select ACCT_ID as acctId,
+               IFNULL(ACTIVATION_GRACE_PERIOD,0) as activationGracePeriod,
+               IFNULL(MIN_ACTIVATION_MONTH,0) as minActivationMonth,
+               IFNULL(BILL_ACTIVATION_GRACE_PERIOD,'0') as billActivationGracePeriod,
+               IFNULL(BILL_MININUM_ACTIVATION_TERM,'0') as billMininumActivationTerm
+        from TF_F_ACCT_COMMITMENTS
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctBillingGeneral"  resultType="com.ai.iot.bill.entity.info.AcctBillingGeneralBean">
+        select ACCT_ID,BILLABLE,ACTIVATION_PRORATION,RENEWAL_PRORATION,DEFAULT_ACTIVATION_PLAN,DEFAULT_ACTIVATION_FEE
+         from TF_F_ACCT_BILLING_GENERAL
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctPromise"  resultType="com.ai.iot.bill.entity.info.AcctPromiseBean">
+        select ACCT_ID as acctId,
+               IFNULL(BILL_ACTIVATION_GRACE_PERIOD,0) as activeGracePeriod,
+               IFNULL(BILL_MININUM_ACTIVATION_TERM,0) as minimumActivationTerm,
+               IFNULL(MINIMUMS_SUBS,0) as miniSubs,
+               IFNULL(CHARGE_PER_SHORT_SUB,0) as chargePerSub,
+               START_DATE as startTime,
+               END_DATE as endTime
+        from TF_F_ACCT_MONTH_MINIMUMS
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctValumeDiscount"  resultType="com.ai.iot.bill.entity.info.AcctValumeDiscountBean">
+        select ACCT_ID ,
+                IFNULL(APPLICATION_DISCOUNT,'0') as applicationDiscount,
+                IFNULL(VERSION,0) as version,
+                GRADE as isGrade,
+                IFNULL(SUBSCRIPTION,'0') as orderEffectFlag,
+                IFNULL(DATA,'0') as dataEffectFlag,
+                IFNULL(SMS,'0') as smsEffectFlag,
+                IFNULL(VOICE,'0') as voiceEffectFlag,
+                IFNULL(ACTIVATION,'0') as activeEffectFlag,
+                IFNULL(OTHER,'0') as otherEffectFlag,
+                UPDATE_TIME
+         from TF_F_ACCT_VOLUMEDISCOUNT
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctDiscount"  resultType="com.ai.iot.bill.entity.info.AcctDiscountBean">
+        select ACCT_ID,GRADE,
+                DEVICE_UP as deviceUpperLimit,
+                DEVICE_LOWER as deviceLowerLimit,
+                DISCOUNT,
+                START_DATE as startTime,
+                END_DATE as endTime
+         from TF_F_ACCT_DISCONT
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getSharePool"  resultType="com.ai.iot.bill.entity.info.SharePoolBean">
+        select ACCT_ID as acctId,
+                POOL_ID as poolId,
+                PLAN_VERSION_ID as planVersionId,
+                START_DATE as startTime,
+                END_DATE as endTime
+         from TF_F_SHAREPOOL
+        where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceByAcctId"  resultType="com.ai.iot.bill.entity.info.DeviceBean">
+         select DEVICE_ID,ACCT_ID ,
+                IFNULL(SUB_ACCT_ID,0) as subAcctId,
+                ACTIVATION_DATE as activationTime,
+                SHIPPED_DATE as shippedTime
+         from TF_F_DEVICE
+        where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDevice"  resultType="com.ai.iot.bill.entity.info.DeviceBean">
+         select DEVICE_ID,ACCT_ID,
+                IFNULL(SUB_ACCT_ID,0) as subAcctId,
+                ACTIVATION_DATE as activationTime,
+                SHIPPED_DATE as shippedTime
+        from TF_F_DEVICE
+        where PARTITION_ID=#{partitionId} and DEVICE_ID=#{deviceId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceStateByAcctId"  resultType="com.ai.iot.bill.entity.info.DeviceStateBean">
+        select DEVICE_ID as deviceId,
+               STATE_CODE as stateCode,
+               START_DATE as startTime,
+               END_DATE as endTime
+          from TF_F_DEVICE_STATE
+         where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceState"  resultType="com.ai.iot.bill.entity.info.DeviceStateBean">
+        select DEVICE_ID as deviceId,STATE_CODE as stateCode,
+               START_DATE as startTime,
+               END_DATE as endTime
+        from TF_F_DEVICE_STATE
+        where PARTITION_ID=#{partitionId} and DEVICE_ID=#{deviceId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceRatePlanByAcctId"  resultType="com.ai.iot.bill.entity.info.DeviceRatePlanBean">
+        select  DEVICE_ID ,
+                RATE_ORDER_ID as orderId,
+                PLAN_TYPE ,
+                PLAN_ID ,
+                PLAN_VERSION_ID ,
+                IFNULL(ACTIVE_FLAG,2) as activeFlag,
+                STATE ,
+                POOL_ID ,
+                START_DATE as startTime,
+                END_DATE as endTime
+         from TF_F_DEVICE_RATE_PLAN
+        where ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getDeviceRatePlan"  resultType="com.ai.iot.bill.entity.info.DeviceRatePlanBean">
+         select DEVICE_ID as deviceId,
+                RATE_ORDER_ID as orderId,
+                PLAN_TYPE as planType,
+                PLAN_ID as planId,
+                PLAN_VERSION_ID as planVersionId,
+                RENEWAL_MODE as penewalMode,
+                STATE as state,
+                POOL_ID as poolId,
+                START_DATE as startTime,
+                END_DATE as endTime
+         from TF_F_DEVICE_RATE_PLAN
+        where DEVICE_ID=#{deviceId}
+    </select>
+
+    <select id="getAcctRateDiscount"  resultType="com.ai.iot.bill.entity.info.AcctRateDiscountBean">
+        select ACCT_ID as acctId,
+               RATE_GROUP as rateGroup,
+               CHIEF_DISCOUNT_RATE as chiefDiscountRate,
+               GRADE_TYPE as gradeType,
+               GRADE_DISCOUNT_ID as gradeDiscountId,
+               START_DATE as startTime,END_DATE as endTime
+        from TF_F_ACCT_RATE_DISCOUNT
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctRateDiscountMember"  resultType="com.ai.iot.bill.entity.info.AcctRateDiscountMemberBean">
+        select a.RATE_GROUP as rateGroup,a.RATE_PLAN_ID as planId,
+               a.START_DATE as startTime,a.END_DATE as endTime
+        from TF_F_ACCT_RATE_DISCOUNT_MEMBER a,TF_F_ACCT_RATE_DISCOUNT b
+        where a.RATE_GROUP=b.RATE_GROUP and b.PARTITION_ID=#{partitionId} and b.ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctOrder"  resultType="com.ai.iot.bill.entity.info.AcctOrderBean">
+        select ACCT_ID,ORDER_ID,OPN as opnCode
+         from TF_F_ORDER
+        where ACCT_ID=#{acctId} and ORDER_STATUS='0'
+    </select>
+
+    <select id="getAcctSmsDiscount"  resultType="com.ai.iot.bill.entity.info.AcctSmsDiscount">
+        select ACCT_ID,GRADE,IS_OPEN as `open`,START_DATE as startTime,END_DATE as endTime
+         from TF_F_ACCT_SMS_DISCOUNT
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getAcctDiscountGrade"  resultType="com.ai.iot.bill.entity.info.AcctDiscountGrade">
+        select ACCT_ID,GRADE,DEVICE_UP,DEVICE_LOWER,SMS_FEE,
+               START_DATE as startTime,END_DATE as endTime
+        from TF_F_ACCT_DISCONT_GRADE
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+    <select id="getUsedAddThirdParty"  resultType="com.ai.iot.bill.entity.usage.UsedAddThirdParty">
+        select PAY_ACCT_ID as ACCT_ID,ZONE_ID,VALUE as currValue
+        from TS_ADD_THIRDSUM_${month}
+        where PAY_ACCT_ID=#{acctId};
+    </select>
+
+    <select id="getAcctAdjustBefore"  resultType="com.ai.iot.bill.entity.info.AcctAdjustBeforeBean">
+        select ACCT_ID,FEE,REMARK,START_CYC_ID,END_CYC_ID
+        from TF_F_ACCT_ADJUST_BEFORE
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId} and #{cycleId} >= START_CYC_ID and END_CYC_ID >= #{cycleId}
+    </select>
+
+    <select id="getAcctMonthFee"  resultType="com.ai.iot.bill.entity.info.AcctMonthFeeBean">
+        select ACCT_ID,
+                ORDER_ID as operateId,
+                FEE_CODE ,FEE_TYPE ,
+                BILLABLE as bill_able,
+                FEE,REMARK,
+                START_DATE as startTime,END_DATE as endTime
+        from TF_F_ACCT_MONTHFEE
+        where PARTITION_ID=#{partitionId} and ACCT_ID=#{acctId}
+    </select>
+
+</mapper>

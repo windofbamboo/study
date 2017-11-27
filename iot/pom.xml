@@ -1,0 +1,194 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>iot-bill</groupId>
+  <artifactId>BILL-ALL</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <modules>  
+    <module> bill-common            </module>
+	<module> bill-paramcachemanager </module>
+    <module> mdb-common        </module>
+    <module> jstorm-unify     </module>
+    <module> bill-storm        </module>
+    <module> bill-param        </module>
+	<module> bill-acct         </module>
+	<module> bill-cb-base      </module>
+  </modules>  
+
+  <dependencies>
+
+	  <dependency>
+		  <groupId>dom4j</groupId>
+		  <artifactId>dom4j</artifactId>
+		  <version>1.6.1</version>
+	  </dependency>
+  	 <dependency>
+	    <groupId>org.apache.tomcat</groupId>  
+	    <artifactId>tomcat-jdbc</artifactId>  
+	    <version>8.5.16</version>  
+	</dependency>
+
+	  <dependency>
+		  <groupId>commons-dbutils</groupId>
+		  <artifactId>commons-dbutils</artifactId>
+		  <version>1.6</version>
+	  </dependency>
+
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.42</version>
+    </dependency>
+    <dependency>
+   		<groupId>com.alibaba.jstorm</groupId>
+	    <artifactId>jstorm-core</artifactId>
+	    <version>2.2.1</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>com.google.protobuf</groupId>
+		<artifactId>protobuf-java</artifactId>
+		<version>2.5.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis</artifactId>
+		<version>3.4.4</version>
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>1.2.34</version>
+	</dependency>
+	<dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>2.9.0</version>      
+    </dependency>
+	<dependency>
+		<groupId>org.apache.kafka</groupId>
+		<artifactId>kafka_2.10</artifactId>
+		<version>0.10.2.1</version>
+		<exclusions>
+			 <exclusion>
+	        <groupId>org.slf4j</groupId>
+	        <artifactId>slf4j-log4j12</artifactId>
+	      </exclusion>
+	      <exclusion>
+	        <groupId>log4j</groupId>
+	        <artifactId>log4j</artifactId>
+	      </exclusion>
+		</exclusions>		
+	</dependency>
+	<dependency>
+	    <groupId>ch.ethz.ganymed</groupId>
+	    <artifactId>ganymed-ssh2</artifactId>
+	    <version>262</version>
+	</dependency>
+	<dependency>
+	    <groupId>de.ruedigermoeller</groupId>
+	    <artifactId>fst</artifactId>
+	    <version>2.51</version>
+	</dependency>
+	<dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>2.10.3</version>
+    </dependency>
+    <dependency>
+	    <groupId>org.ehcache</groupId>
+	    <artifactId>ehcache</artifactId>
+	    <version>3.3.1</version>
+	</dependency>
+	<!-- protostuff -->
+    <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>1.4.4</version>
+    </dependency>  
+    <dependency>  
+        <groupId>io.protostuff</groupId>  
+        <artifactId>protostuff-runtime</artifactId>  
+        <version>1.4.4</version>  
+    </dependency> 
+    <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+     </dependency>
+     <!-- https://mvnrepository.com/artifact/com.github.rholder/guava-retrying -->
+     <dependency>
+       <groupId>com.github.rholder</groupId>
+       <artifactId>guava-retrying</artifactId>
+       <version>2.0.0</version>
+     </dependency>
+        
+  </dependencies>
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                 	<skip>true</skip>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.12.4</version>
+			    <configuration>
+                    <skipTests>true</skipTests>
+			    </configuration>
+			</plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                     <include>**/*.properties</include>
+                     <include>**/*.xml</include>
+                     <include>**/*.yaml</include>
+                     <include>**/*.lua</include>
+                 </includes>
+                 <filtering>false</filtering>
+             </resource>
+             <resource>
+                 <directory>src/main/java</directory>
+                 <includes>
+                     <include>**/*.properties</include>
+                     <include>**/*.xml</include>
+                     <include>**/*.yaml</include>
+                     <include>**/*.lua</include>
+                 </includes>
+                 <filtering>false</filtering>
+             </resource>
+             <resource>
+                 <directory>src/main/config</directory>
+                 <includes>
+                     <include>**/*.properties</include>
+                     <include>**/*.xml</include>
+                     <include>**/*.yaml</include>
+                     <include>**/*.lua</include>
+                 </includes>
+                 <filtering>false</filtering>
+             </resource>
+         </resources>
+     </build>
+ </project>

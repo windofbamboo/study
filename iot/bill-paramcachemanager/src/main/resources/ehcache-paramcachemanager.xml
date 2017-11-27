@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ehcache name="ParamCacheManagerGlobal" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				xsi:noNamespaceSchemaLocation="ehcache.xsd" 
+				updateCheck="true" monitoring="on" dynamicConfig="true">
+	<!--cachemanager使用单例创建的默认cache,默认cache名字默认为default,可以不需要-->
+	<defaultCache><persistence strategy="none"/></defaultCache>
+	<!--
+	ParamCachePoGroupTemplate内部通过该模版cache产生Po组的每个cache
+	注:这里的模版不是cache配置模版的意思
+	1)heap大小0=不受限; 但受制于Integer.MAX_SIZE (2147483647),集群除外
+	2)不持久化
+	3)数据永远有效
+	4)非集群
+	-->
+	<cache name="ParamCachePoGroupTemplate" maxEntriesLocalHeap="2147483647" eternal="true"  
+				transactionalMode="off">
+			<persistence strategy="none"/>
+	</cache>
+</ehcache>
+
+

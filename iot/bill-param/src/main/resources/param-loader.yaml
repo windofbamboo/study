@@ -1,0 +1,3 @@
+storm.cluster.mode: distributed
+topology.message.timeout.secs: 600
+parallelism.InmqBolt: 1

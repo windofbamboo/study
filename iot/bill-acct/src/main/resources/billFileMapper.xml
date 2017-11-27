@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="resMapper">
+    <!-- select 方法 -->
+    <select id="getAcctListByProvince" resultType="com.ai.iot.bill.entity.info.OutAcctTaskBean">
+        select t.ACCT_ID as acctId from TF_F_ACCT t 
+        where t.REMOVE_TAG = 0 and CONCAT(',',?,',') like CONCAT('%,',t.PROVINCE_CODE,',%');
+    </select>
+    
+    <select id="getValidAcctList" resultType="com.ai.iot.bill.entity.info.OutAcctTaskBean">
+        select t.ACCT_ID as acctId from TF_F_ACCT t 
+        where t.REMOVE_TAG = 0 and CONCAT(',',?,',') like CONCAT('%,',t.ACCT_ID,',%');
+    </select>
+    
+    <select id="getProcessAcctList" resultType="com.ai.iot.bill.entity.info.OutAcctTaskBean">
+        select t.ACCT_ID as acctId from TL_B_ACCT t where t.DEAL_STAGE = ?;
+    </select>
+</mapper>

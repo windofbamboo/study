@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="paramMapper">
+
+    <select id="getRatePlan"  resultType="com.ai.iot.bill.entity.param.RatePlanBean">
+        select PLAN_ID as planId,PLAN_TYPE as planType,PAYMENT_TYPE as paymentType
+         from TD_B_RATE_PLAN
+    </select>
+
+    <select id="getRatePlanVersion"  resultType="com.ai.iot.bill.entity.param.RatePlanVersionBean">
+        select PLAN_VERSION_ID as planVersionId,
+                PLAN_ID as planId,
+                STATE as state,
+                ACCOUNT_CHARGE as accountCharge,
+                IFNULL(SUBSCRIBER_CHARGE_FREQUENCY,0) as subscriberChargeFerquency,
+                IFNULL(PER_SUBSCRIBER_CHARGE,0) as subscriberCharge,
+                IFNULL(LEVEL_ID,0) as levelId,
+                IS_EXPIRE_TERM_BY_USAGE as isExpireTermByUsage,
+                IFNULL(VOICE_CHARGE_TAG,1) as voiceChargeTag,
+                IFNULL(SMS_CHARGE_TAG,1) as smsChargeTag,
+                IFNULL(VOICE_CHARGE_MODE,2) as voiceChargeMode,
+                IFNULL(SMS_CHARGE_MODE,2) as smsChargeMode,
+                IFNULL(SHARED_MO_SMS,'0')  as sharedMoSms,
+                IFNULL(SHARED_MT_SMS,'0') as sharedMtSms,
+                IFNULL(SHARED_MO_VOICE,'0') as sharedMoVoice,
+                IFNULL(SHARED_MT_VOICE,'0') as sharedMtVoice,
+                START_DATE as startTime,
+                RATE_EXPIRE_DATE as rateExpireTime
+         from TD_B_RATE_PLAN_VERSION
+        where STATE = 1
+    </select>
+
+    <select id="getRatePlanLevel"  resultType="com.ai.iot.bill.entity.param.RatePlanLevelBean">
+        select LEVEL_ID as levelId,LEVEL_PRIORITY as levelPriority,MIN_AMOUNT as minAmount,
+                MAX_AMOUNT as maxAmount,PER_SUBSCRIBER_CHARGE as subscriberCharge
+        from TD_B_RATE_PLAN_LEVEL
+    </select>
+
+    <select id="getRatePlanData"  resultType="com.ai.iot.bill.entity.param.RatePlanDataBean">
+        select PLAN_VERSION_ID as planVersionId,ZONE_ID as zoneId,INCLUDED_DATA as includeData,BILL_ID as billId,BASE_UNIT as baseUnit,
+               BASE_TIMES as baseTimes,UNIT_RATIO as unitRatio,ITEM_ROAM as roamTag,is_bulk as bulkTag,`PRECISION`
+        from TD_B_RATE_PLAN_DATA
+    </select>
+
+    <select id="getRatePlanSms"  resultType="com.ai.iot.bill.entity.param.RatePlanSmsBean">
+        select PLAN_VERSION_ID as planVersionId,ZONE_ID as zoneId,ZONE_BILLINGGROUP_ID as zoneBillingGroupId,
+                INCLUDED_SMS as includeSms,BILL_ID as billId,UNIT_RATIO as unitRatio,
+                BILL_ID_MO as billIdMo,INCLUDED_SMS_MO as includeSmsMo,UNIT_RATIO_MO as unitRatioMo,
+                BILL_ID_MT as billIdMt,INCLUDED_SMS_MT as includeSmsMt,UNIT_RATIO_MT as unitRatioMt,ITEM_ROAM as roamTag,`PRECISION`
+        from TD_B_RATE_PLAN_SMS
+    </select>
+
+    <select id="getRatePlanVoice"  resultType="com.ai.iot.bill.entity.param.RatePlanVoiceBean">
+        select PLAN_VERSION_ID as planVersionId,ZONE_ID as zoneId,ZONE_BILLINGGROUP_ID as zoneBillingGroupId,
+                INCLUDED_VOICE as includeVoice,BILL_ID as billId,UNIT_RATIO as unitRatio,
+                INCLUDED_VOICE_MO as includeVoiceMo,BILL_ID_MO as billIdMo,UNIT_RATIO_MO as unitRatioMo,
+                INCLUDED_VOICE_MT as includeVoiceMt,BILL_ID_MT as billIdMt,UNIT_RATIO_MT as unitRatioMt,
+                BASE_UNIT as baseUnit,ITEM_ROAM as roamTag,`PRECISION`
+        from TD_B_RATE_PLAN_VOICE
+    </select>
+
+    <select id="getZoneBillingGroup"  resultType="com.ai.iot.bill.entity.param.ZoneBillingGroupBean">
+        select ZONE_BILLINGGROUP_ID as zoneBillingGroupId,BILLINGGROUP_ID as billingGroupId,
+                INCLUDED_VALUE as includeValue,BILL_ID as billId,UNIT_RATIO as unitRatio,BASE_UNIT as baseUnit,`PRECISION`
+        from TD_B_ZONE_BILLINGGROUP
+    </select>
+
+    <select id="getFeeBase"  resultType="com.ai.iot.bill.entity.param.FeeBaseBean">
+        select PLAN_ID as planId,PRIORITY as priority,BILL_ID as billId,
+                BASE_UNIT as baseUnit,BASE_TIMES as baseTimes,UNIT_RATIO as unitRatio,ITEM_ROAM as isRoam,`PRECISION`
+        from TD_B_FEEBASE
+    </select>
+
+    <select id="getAddupId"  resultType="com.ai.iot.bill.entity.param.AddupIdBean">
+        select BILL_ID as billId,BIZ_TYPE as bizType,ZONE_ID as zoneId,GROUP_ID as groupId,CALL_TYPE as callType
+        from TD_B_BILLID
+    </select>
+
+    <select id="getSumbillUse"  resultType="com.ai.iot.bill.entity.param.SumbillUseBean">
+        select ITEM_ID,CHARGE_MODE,PAYMENT_TYPE,BIZ_TYPE,ROAMING_TAG as isRoam,START_CYC_ID,END_CYC_ID,VALID_TAG
+        from TD_B_SUMBILL
+    </select>
+
+    <select id="getSumbillFix"  resultType="com.ai.iot.bill.entity.param.SumbillFixBean">
+        select CHARGE_TYPE,CHARGE_NAME,PAYMENT_TYPE,ITEM_ID,ITEM_NAME,START_CYC_ID,END_CYC_ID,VALID_TAG
+        from TD_B_ACCTFEE_SUMBILL
+    </select>
+
+    <select id="getItem"  resultType="com.ai.iot.bill.entity.param.ItemBean">
+        select a.ITEM_ID ,a.ITEM_CLASS,b.PROV_ITEM_ID,b.HEADQUARTER_ITEM_ID,b.BILL_TYPE
+         from TD_B_ITEM a,TD_B_ITEM_CB b
+        where a.PROV_ITEM_ID=b.PROV_ITEM_ID;
+    </select>
+
+    <select id="getItemMonthFee"  resultType="com.ai.iot.bill.entity.param.ItemMonthFee">
+        select FEE_CODE,CHARGE_TYPE from TD_B_ITEM_MONTHFEE;
+    </select>
+
+    <select id="getCycle"  resultType="com.ai.iot.bill.entity.param.CycleBean">
+        select CYCLE_ID,MONTH_ACCT_STATUS,
+                CYC_START_TIME as CYC_START_TIME ,
+                CYC_HALF_TIME as CYC_HALF_TIME ,
+                CYC_END_TIME as CYC_END_TIME
+        from TD_B_CYCLE
+    </select>
+
+    <select id="getDiscontGradeDetailBean"  resultType="com.ai.iot.bill.entity.param.DiscontGradeDetailBean">
+        select GRADE_ID,GRADE_INDEX,DEVICE_UP,DEVICE_LOWER,DISCOUNT,
+                START_DATE as startTime,
+                END_DATE as endTime
+         from TD_B_DISCONT_GRADE_DETAIL
+    </select>
+
+    <select id="getOpn"  resultType="com.ai.iot.bill.entity.param.Opn">
+        select OPN_CODE,PRICE from TD_S_OPN where STATE='1'
+    </select>
+
+    <select id="getThirdPartyPlan"  resultType="com.ai.iot.bill.entity.param.ThirdPartyPlan">
+        select PLAN_ID as planId,START_CYC_ID as startCycleId,END_CYC_ID as endCycleId,PAY_ACCT_ID as payAcctId
+        from TD_B_THIRD_PARTY_PLAN
+        where STATE = 1
+    </select>
+
+    <select id="getThirdPartyVersion"  resultType="com.ai.iot.bill.entity.param.ThirdPartyVersion">
+        select PLAN_ID,PLAN_VERSION_ID,START_CYC_ID as startCycleId,END_CYC_ID as endCycleId,LEVEL_MODEL
+        from TD_B_THIRD_PARTY_VERSION
+        where STATE = 1
+    </select>
+
+    <select id="getThirdPartyZone"  resultType="com.ai.iot.bill.entity.param.ThirdPartyZone">
+        select PLAN_VERSION_ID,ZONE_ID
+        from TD_B_THIRD_PARTY_ZONE
+    </select>
+
+    <select id="getThirdPartyLevel"  resultType="com.ai.iot.bill.entity.param.ThirdPartyLevel">
+        select PLAN_VERSION_ID,LEVEL_PRIORITY,MIN_AMOUNT,MAX_AMOUNT,LEVEL_UNIT,BASE_UNIT,BASE_TIMES,UNIT_RATIO,`PRECISION`
+        from TD_B_THIRD_PARTY_LEVEL
+    </select>
+
+</mapper>

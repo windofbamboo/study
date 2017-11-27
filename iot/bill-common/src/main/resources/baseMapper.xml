@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseMapper">
+
+    <select id="getRoute" resultType="com.ai.iot.bill.common.param.RouteBean">
+        select ROUTE_TYPE     as "routeType",
+                PROVINCE_CODE  as "provinceCode",
+                COMPUTER_MODE  as "computerMode",
+                MIN            as "min",
+                MAX            as "max",
+                SOURCE_ID      as "sourceId"
+        from TD_B_ROUTE
+    </select>
+
+    <select id="getConnect" resultType="com.ai.iot.bill.common.param.ConnectBean">
+        select CONN_ID as "connId",
+                CONN_CODE as "connCode",
+                CONNECT_STR as "connectStr",
+                PDB_USER as "pdbUser",
+                PASSWD as "passWord"
+        from TD_B_CONNECT
+    </select>
+
+    <!-- 根据 连接编码 查询得到 连接信息 适用于mysql,zookeeper-->
+    <select id="getConnectByConnCode" parameterType="String" resultType="com.ai.iot.bill.common.param.ConnectBean">
+        select CONN_ID ,CONN_CODE ,CONNECT_STR ,PDB_USER ,PASSWD as pass_word
+        from TD_B_CONNECT
+        where CONN_CODE= #{connCode,javaType=String,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据 连接类型 查询得到 连接串信息 适用于mysql-->
+    <select id="getConnectByRouteType" parameterType="int" resultType="com.ai.iot.bill.common.param.ConnectBean">
+        select b.CONN_ID as "connId",
+                b.CONN_CODE as "connCode",
+                b.CONNECT_STR as "connectStr",
+                b.PDB_USER as "pdbUser",
+                b.PASSWD as "passWord"
+        from TD_B_ROUTE a,TD_B_CONNECT b
+        where a.SOURCE_ID=b.CONN_ID and a.ROUTE_TYPE= #{routeType,javaType=int,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据 连接类型 查询得到 主机IP信息 适用于kafka,redis-->
+    <select id="getConnHostByRouteType" parameterType="int" resultType="com.ai.iot.bill.common.param.ConnHostBean">
+        select b.CONN_ID as "connId",
+                b.HOST_TYPE as "hostType",
+                b.HOST_IP as "hostIp",
+                b.HOST_PORT as "hostPort"
+        from TD_B_ROUTE a,TD_B_CONN_HOST b
+        where a.SOURCE_ID=b.CONN_ID and a.ROUTE_TYPE= #{routeType,javaType=int,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据 连接类型 查询得到 连接属性信息 适用于kafka -->
+    <select id="getConnPropertyByRouteType" parameterType="int" resultType="com.ai.iot.bill.common.param.ConnPropertyBean">
+        select b.CONN_ID as "connId",
+                b.PROP_TYPE as "propType",
+                b.PROP_NAME as "propName",
+                b.PROP_VALUE as "propValue"
+        from TD_B_ROUTE a,TD_B_CONN_PROPERTY b
+        where a.SOURCE_ID=b.CONN_ID and a.ROUTE_TYPE= #{routeType,javaType=int,jdbcType=VARCHAR}
+    </select>
+	 <select id="getParamByTypeAndName" resultType="com.ai.iot.bill.common.param.ParamBean">
+        select param_value as paramValue,param_value2 as paramValue2 from TD_B_PARAM where param_type=#{paramType} and param_name=#{paramName}
+    </select>
+    <select id="getParamByTypeOne" resultType="com.ai.iot.bill.common.param.ParamBean">
+        select param_name as paramName,param_value as paramValue,param_value2 as paramValue2 from TD_B_PARAM where param_type=#{paramType}
+        order by param_name,param_value
+    </select>
+</mapper>
