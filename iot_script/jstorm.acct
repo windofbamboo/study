@@ -1,0 +1,110 @@
+#!/bin/sh
+#
+#
+# chkconfig:   - 86 14
+# description: jstorm.
+### END INIT INFO
+
+# Source function library.
+
+. /etc/rc.d/init.d/functions
+
+
+
+
+
+
+
+
+
+
+
+
+# 设置环境变量
+JSTORM_HOME=/iot/jstorm/jstorm-2.2.1
+JSTORM_CONF_DIR=$JSTORM_HOME/conf
+
+exec="$JSTORM_HOME/bin/start.sh"
+prog="jstorm.acct"
+
+lockfile=$JSTORM_HOME/$prog.lock
+pidfile=$JSTORM_HOME/$prog.pid
+
+# jstorm启动实例
+PROCESS=
+
+ip=`hostname -i`
+nimbus=`grep "nimbus.host:" $JSTORM_CONF_DIR/storm.yaml | grep -w $ip`  
+[ "X${nimbus}" != "X" ] && PROCESS='nimbus' || PROCESS='supervisor'
+
+start() {
+  user=`whoami`
+  if [ $user = 'root' ]
+  then
+    su - jstorm -s $exec >/dev/null 2>&1 &
+  else
+    daemon $exec >/dev/null 2>&1 &
+  fi
+  # 10检测进程是否存在
+  for ((int=0; i<10; i++))
+  do    
+    pid=$(ps -ef | grep -v grep | grep java | grep server | grep jstorm | awk '{print $2}')    
+    [ "x$pid" != "x" ] && break
+    sleep 1
+  done
+  echo $pid > $pidfile
+
+  if [ "x$pid" != "x"  ]
+  then
+    action "Starting $prog pid: $pid" /bin/true
+    touch $lockfile
+  else
+    action "Starting $prog" /bin/false; 
+    retval=1
+  fi
+}
+
+stop() {
+  if [ -f $pidfile ]
+  then
+    pid=$(cat $pidfile)
+    [ 'X$pid' != 'x' ] && kill -9 $pid >/dev/null
+  fi
+  
+  action "Stopping $prog pid: $pid" /bin/true
+  [ -f $lockfile ] && rm -rf $lockfile
+  [ -f $pidfile  ] && rm -rf $pidfile  
+}
+
+restart() {
+  stop
+  start
+}
+
+rh_status() {
+  status -p $pidfile $prog 
+}
+
+rh_status_q() {
+  rh_status &>/dev/null
+}
+
+case "$1" in
+  start)
+    rh_status_q && exit 0
+    $1
+    ;;
+  stop)
+    $1
+    ;;
+  restart)
+    $1
+    ;;
+  status)
+    rh_status
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status}"
+    exit 2
+esac
+exit $?
