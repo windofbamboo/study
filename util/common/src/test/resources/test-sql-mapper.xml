@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="testSqlMapper">
+
+    <select id="getInfoTest" parameterType="long" resultType="com.common.info.InfoTest">
+        select id,PROPERTY_VALUE,UPDATE_TIME from GEYF_TEST where id=#{ID}
+    </select>
+
+    <insert id="insertInfoTest" parameterType="com.common.info.InfoTest">
+        insert into GEYF_TEST(ID,PROPERTY_VALUE,UPDATE_TIME)
+        values(#{id},#{propertyValue},sysdate)
+    </insert>
+
+    <update id="updateInfoTest" parameterType="com.common.info.InfoTest">
+        update GEYF_TEST set PROPERTY_VALUE=#{propertyValue} where id=#{id}
+    </update>
+
+    <delete id="deleteInfoTest" parameterType="long">
+        delete from GEYF_TEST where id =#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,92 @@
+[2018-04-17 16:12:58 INFO  main  EtcdNettyClient.java:127] m.etcd4j.transport.EtcdNettyClient --> Setting up Etcd4j Netty client
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.u.i.l.InternalLoggerFactory --> Using SLF4J as the default logging framework
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.c.MultithreadEventLoopGroup --> -Dio.netty.eventLoopThreads: 16
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent --> Platform: Windows
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent0 --> -Dio.netty.noUnsafe: false
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent0 --> Java version: 8
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent0 --> sun.misc.Unsafe.theUnsafe: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent0 --> sun.misc.Unsafe.copyMemory: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent0 --> java.nio.Buffer.address: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent0 --> direct buffer constructor: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent0 --> java.nio.Bits.unaligned: available, true
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent0 --> jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent0 --> java.nio.DirectByteBuffer.<init>(long, int): available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> sun.misc.Unsafe: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> -Dio.netty.tmpdir: C:\Users\Administrator\AppData\Local\Temp (java.io.tmpdir)
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> -Dio.netty.bitMode: 64 (sun.arch.data.model)
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> -Dio.netty.noPreferDirect: false
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> -Dio.netty.maxDirectMemory: 1875378176 bytes
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.util.internal.PlatformDependent --> -Dio.netty.uninitializedArrayAllocationThreshold: -1
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] io.netty.util.internal.CleanerJava6 --> java.nio.ByteBuffer.cleaner(): available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] io.netty.channel.nio.NioEventLoop --> -Dio.netty.noKeySetOptimization: false
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] io.netty.channel.nio.NioEventLoop --> -Dio.netty.selectorAutoRebuildThreshold: 512
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:71] i.n.util.internal.PlatformDependent --> org.jctools-core.MpscChunkedArrayQueue: available
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:81] io.netty.util.ResourceLeakDetector --> -Dio.netty.leakDetection.level: simple
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:81] io.netty.util.ResourceLeakDetector --> -Dio.netty.leakDetection.targetRecords: 4
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.numHeapArenas: 16
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.numDirectArenas: 16
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.pageSize: 8192
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.maxOrder: 11
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.chunkSize: 16777216
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.tinyCacheSize: 512
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.smallCacheSize: 256
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.normalCacheSize: 64
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.cacheTrimInterval: 8192
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.buffer.PooledByteBufAllocator --> -Dio.netty.allocator.useCacheForAllThreads: true
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.u.i.InternalThreadLocalMap --> -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+[2018-04-17 16:12:58 DEBUG main  Slf4JLogger.java:76] i.n.u.i.InternalThreadLocalMap --> -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+[2018-04-17 16:12:59 DEBUG main  Slf4JLogger.java:76] i.n.r.d.DefaultDnsServerAddressStreamProvider --> Default DNS servers: [/10.21.9.241:53] (sun.net.dns.ResolverConfiguration)
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.channel.DefaultChannelId --> -Dio.netty.processId: 10012 (auto-detected)
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.util.NetUtil --> -Djava.net.preferIPv4Stack: false
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.util.NetUtil --> -Djava.net.preferIPv6Addresses: false
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:86] io.netty.util.NetUtil --> Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:81] io.netty.util.NetUtil --> Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.channel.DefaultChannelId --> -Dio.netty.machineId: 00:50:56:ff:fe:c0:00:01 (auto-detected)
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.buffer.ByteBufUtil --> -Dio.netty.allocator.type: pooled
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.buffer.ByteBufUtil --> -Dio.netty.threadLocalDirectBufferSize: 65536
+[2018-04-17 16:13:01 DEBUG main  Slf4JLogger.java:76] io.netty.buffer.ByteBufUtil --> -Dio.netty.maxThreadLocalCharBufferSize: 16384
+[2018-04-17 16:13:01 DEBUG nioEventLoopGroup-2-1  Slf4JLogger.java:81] io.netty.buffer.AbstractByteBuf --> -Dio.netty.buffer.bytebuf.checkAccessible: true
+[2018-04-17 16:13:01 DEBUG nioEventLoopGroup-2-1  Slf4JLogger.java:76] i.n.util.ResourceLeakDetectorFactory --> Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@5d19ae8a
+[2018-04-17 16:13:01 DEBUG nioEventLoopGroup-2-1  Slf4JLogger.java:86] i.n.r.d.UnixResolverDnsServerAddressStreamProvider --> failed to parse /etc/resolv.conf and/or /etc/resolver
+java.lang.IllegalArgumentException: \etc\resolv.conf didn't provide any name servers
+	at io.netty.resolver.dns.UnixResolverDnsServerAddressStreamProvider.<init>(UnixResolverDnsServerAddressStreamProvider.java:98)
+	at io.netty.resolver.dns.UnixResolverDnsServerAddressStreamProvider.<init>(UnixResolverDnsServerAddressStreamProvider.java:124)
+	at io.netty.resolver.dns.UnixResolverDnsServerAddressStreamProvider.parseSilently(UnixResolverDnsServerAddressStreamProvider.java:66)
+	at io.netty.resolver.dns.DnsServerAddressStreamProviders.<clinit>(DnsServerAddressStreamProviders.java:28)
+	at io.netty.resolver.dns.DnsNameResolverBuilder.<init>(DnsNameResolverBuilder.java:54)
+	at io.netty.resolver.dns.DnsAddressResolverGroup.newNameResolver(DnsAddressResolverGroup.java:101)
+	at io.netty.resolver.dns.DnsAddressResolverGroup.newResolver(DnsAddressResolverGroup.java:86)
+	at io.netty.resolver.dns.DnsAddressResolverGroup.newResolver(DnsAddressResolverGroup.java:73)
+	at io.netty.resolver.AddressResolverGroup.getResolver(AddressResolverGroup.java:69)
+	at io.netty.bootstrap.Bootstrap.doResolveAndConnect0(Bootstrap.java:200)
+	at io.netty.bootstrap.Bootstrap.access$000(Bootstrap.java:49)
+	at io.netty.bootstrap.Bootstrap$1.operationComplete(Bootstrap.java:188)
+	at io.netty.bootstrap.Bootstrap$1.operationComplete(Bootstrap.java:174)
+	at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:507)
+	at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:481)
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:420)
+	at io.netty.util.concurrent.DefaultPromise.trySuccess(DefaultPromise.java:104)
+	at io.netty.channel.DefaultChannelPromise.trySuccess(DefaultChannelPromise.java:82)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.safeSetSuccess(AbstractChannel.java:978)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.register0(AbstractChannel.java:512)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.access$200(AbstractChannel.java:423)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe$1.run(AbstractChannel.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:403)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:463)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	at java.lang.Thread.run(Thread.java:748)
+[2018-04-17 16:13:01 DEBUG nioEventLoopGroup-2-1  EtcdNettyClient.java:254] m.etcd4j.transport.EtcdNettyClient --> Connection failed to http://192.168.0.126:2379, cause {}
+io.netty.channel.ConnectTimeoutException: connection timed out: /192.168.0.126:2379
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:267)
+	at io.netty.util.concurrent.PromiseTask$RunnableAdapter.call(PromiseTask.java:38)
+	at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:120)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:403)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:463)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	at java.lang.Thread.run(Thread.java:748)
+[2018-04-17 16:13:01 DEBUG nioEventLoopGroup-2-1  RetryPolicy.java:61] mousio.client.retry.RetryPolicy --> Retry 1 to send command

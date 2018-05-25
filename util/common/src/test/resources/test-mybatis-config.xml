@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="test-jdbc.properties" >
+        <property name="jdbc.driverClassName" value="oracle.jdbc.OracleDriver"/>
+    </properties>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+    <!-- 对事务的管理和连接池的配置 -->
+    <environments default="roam">
+        <environment id="roam">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}" />
+                <property name="url" value="${roam.url}" />
+                <property name="username" value="${roam.username}" />
+                <property name="password" value="${roam.password}" />
+                <property name="poolMaximumActiveConnections" value="${roam.poolMaximumActiveConnections}"/>
+                <property name="poolMaximumIdleConnections" value="${roam.poolMaximumIdleConnections}"/>
+            </dataSource>
+        </environment>
+        <environment id="param">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}" />
+                <property name="url" value="${param.url}" />
+                <property name="username" value="${param.username}" />
+                <property name="password" value="${param.password}" />
+                <property name="poolMaximumActiveConnections" value="${param.poolMaximumActiveConnections}"/>
+                <property name="poolMaximumIdleConnections" value="${param.poolMaximumIdleConnections}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+    <!-- mapping 文件路径配置 -->
+    <mappers>
+        <mapper resource="test-sql-mapper.xml" />
+    </mappers>
+
+
+</configuration>
+

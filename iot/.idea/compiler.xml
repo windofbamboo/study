@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bill-acct" />
+        <module name="bill-cb-base" />
+        <module name="bill-common" />
+        <module name="bill-param" />
+        <module name="bill-paramcachemanager" />
+        <module name="bill-storm" />
+        <module name="jstorm-unify" />
+        <module name="mdb-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bill-acct" target="1.8" />
+      <module name="BILL-ALL" target="1.8" />
+      <module name="bill-cb-base" target="1.8" />
+      <module name="bill-common" target="1.8" />
+      <module name="bill-param" target="1.8" />
+      <module name="bill-paramcachemanager" target="1.8" />
+      <module name="bill-storm" target="1.8" />
+      <module name="jstorm-unify" target="1.8" />
+      <module name="mdb-common" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BILL-ALL.iml" filepath="$PROJECT_DIR$/BILL-ALL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-acct/bill-acct.iml" filepath="$PROJECT_DIR$/bill-acct/bill-acct.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-cb-base/bill-cb-base.iml" filepath="$PROJECT_DIR$/bill-cb-base/bill-cb-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-common/bill-common.iml" filepath="$PROJECT_DIR$/bill-common/bill-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-param/bill-param.iml" filepath="$PROJECT_DIR$/bill-param/bill-param.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-paramcachemanager/bill-paramcachemanager.iml" filepath="$PROJECT_DIR$/bill-paramcachemanager/bill-paramcachemanager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bill-storm/bill-storm.iml" filepath="$PROJECT_DIR$/bill-storm/bill-storm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jstorm-unify/jstorm-unify.iml" filepath="$PROJECT_DIR$/jstorm-unify/jstorm-unify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mdb-common/mdb-common.iml" filepath="$PROJECT_DIR$/mdb-common/mdb-common.iml" />
+    </modules>
+  </component>
+</project>
